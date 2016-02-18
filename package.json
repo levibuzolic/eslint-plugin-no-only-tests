@@ -1,0 +1,38 @@
+{
+  "name": "eslint-plugin-no-only-tests",
+  "version": "1.0.0",
+  "description": "ESLint rule for describe.only/it.only in mocha tests",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "mocha",
+    "rule",
+    "only",
+    "describe",
+    "it"
+  ],
+  "author": "Levi Buzolic",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "dependencies": {
+    "requireindex": "~1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "~1.2.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:levibuzolic/eslint-plugin-no-only-tests.git"
+  },
+  "bugs": {
+    "url": "https://github.com/levibuzolic/no-only-tests/issues"
+  },
+  "homepage": "https://github.com/levibuzolic/no-only-tests#readme"
+}
