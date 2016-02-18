@@ -1,6 +1,6 @@
 # eslint-plugin-no-only-tests
 
-[![Version](https://img.shields.io/npm/v/no-only-tests.svg)](https://www.npmjs.com/package/no-only-tests)
+[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests)
 
 ESLint rule for `describe.only` and `it.only` in [mocha](https://mochajs.org/) tests.
 
