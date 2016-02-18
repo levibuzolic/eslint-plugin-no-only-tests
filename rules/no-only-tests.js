@@ -1,11 +1,11 @@
 module.exports = function(context) {
+  var regex = /^(describe|it)$/;
+
   return {
-    CallExpression: function(node) {
-      if (context.getSource(node).match(/[it|describe]\.only/)) {
-        context.report(node, '.only mocha test block found');
+    Identifier: function(node) {
+      if (node.name === 'only' && regex.test(node.parent.object.name)) {
+        context.report(node, node.parent.object.name + '.only not permitted');
       }
     }
-  };
+  }
 };
-
-module.exports.schema = [];

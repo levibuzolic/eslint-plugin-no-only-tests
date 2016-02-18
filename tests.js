@@ -8,6 +8,10 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'describe("Some describe block", function() {});'
     }, {
       code: 'it("Some assertion", function() {});'
+    }, {
+      code: 'xit.only("Some assertion", function() {});'
+    }, {
+      code: 'xdescribe.only("Some describe block", function() {});'
     }
   ],
 
@@ -15,12 +19,12 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
     {
       code: 'describe.only("Some describe block", function() {});',
       errors: [{
-        message: '.only mocha test block found'
+        message: 'describe.only not permitted'
       }]
     }, {
       code: 'it.only("Some assertion", function() {});',
       errors: [{
-        message: '.only mocha test block found'
+        message: 'it.only not permitted'
       }]
     }
   ]
