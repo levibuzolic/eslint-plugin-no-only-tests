@@ -1,8 +1,8 @@
 # eslint-plugin-no-only-tests
 
-[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![CircleCI](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests.svg?style=shield)](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests)
+[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npm-stat.com/charts.html?package=eslint-plugin-no-only-tests) [![CircleCI](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests.svg?style=shield)](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests)
 
-ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS library tests.
+ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS testing libraries.
 
 Currently matches the following test blocks: `describe`, `it`, `context`, `tape`, `test`
 
