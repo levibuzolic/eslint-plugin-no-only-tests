@@ -1,5 +1,5 @@
 module.exports = function(context) {
-  var regex = /^(describe|it|test|tape)$/;
+  var regex = /^(describe|it|context|test|tape)$/;
 
   return {
     Identifier: function(node) {
