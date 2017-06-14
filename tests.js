@@ -12,6 +12,14 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'xit.only("Some assertion", function() {});'
     }, {
       code: 'xdescribe.only("Some describe block", function() {});'
+    }, {
+      code: 'xcontext.only("A context block", function() {});'
+    }, {
+      code: 'xtape.only("A tape block", function() {});'
+    }, {
+      code: 'xtest.only("A test block", function() {});'
+    }, {
+      code: 'other.only("An other block", function() {});'
     }
   ],
 
@@ -25,6 +33,21 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'it.only("Some assertion", function() {});',
       errors: [{
         message: 'it.only not permitted'
+      }]
+    }, {
+      code: 'context.only("Some context", function() {});',
+      errors: [{
+        message: 'context.only not permitted'
+      }]
+    }, {
+      code: 'test.only("Some test", function() {});',
+      errors: [{
+        message: 'test.only not permitted'
+      }]
+    }, {
+      code: 'tape.only("A tape", function() {});',
+      errors: [{
+        message: 'tape.only not permitted'
       }]
     }
   ]
