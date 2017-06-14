@@ -1,10 +1,30 @@
-module.exports = function(context) {
-  var regex = /^(describe|it|context|test|tape)$/;
+/**
+ * @fileoverview Rule to flag use of .only blocks in tests
+ * @author Levi Buzolic
+ */
 
-  return {
-    Identifier: function(node) {
-      if (node.name === 'only' && regex.test(node.parent.object.name)) {
-        context.report(node, node.parent.object.name + '.only not permitted');
+"use strict";
+
+//------------------------------------------------------------------------------
+// Rule Definition
+//------------------------------------------------------------------------------
+
+module.exports = {
+  meta: {
+    docs: {
+      description: "disallow .only blocks in tests",
+      category: "Possible Errors",
+    }
+  },
+
+  create(context) {
+    const regex = /^(describe|it|context|test|tape)$/;
+
+    return {
+      Identifier: function(node) {
+        if (node.name === 'only' && regex.test(node.parent.object.name)) {
+          context.report(node, node.parent.object.name + '.only not permitted');
+        }
       }
     }
   }
