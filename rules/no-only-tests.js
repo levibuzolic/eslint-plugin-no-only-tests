@@ -4,7 +4,7 @@ module.exports = {
   },
 
   create: function(context) {
-    var regex = /^(describe|it)$/;
+    var regex = /^(describe|it|context|test|tape)$/;
 
     return {
       Identifier: function(node) {
