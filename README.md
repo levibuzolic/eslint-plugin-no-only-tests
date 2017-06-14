@@ -2,13 +2,15 @@
 
 [![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![CircleCI](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests.svg?style=shield)](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests)
 
-ESLint rule for `(describe|it|context|tape|test).only` in [mocha](https://mochajs.org/) and other JS library tests.
+ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS library tests.
+
+Currently matches the following test blocks: `describe`, `it`, `context`, `tape`, `test`
 
 ## Installation
 
 First you'll need to install [ESLint](http://eslint.org) and the plugin:
 
-```
+```bash
 npm install --save-dev eslint eslint-plugin-no-only-tests
 # OR
 yarn add --dev eslint eslint-plugin-no-only-tests
