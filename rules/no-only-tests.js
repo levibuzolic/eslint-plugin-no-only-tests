@@ -1,10 +1,24 @@
+/**
+ * @fileoverview Rule to flag use of .only blocks in tests
+ * @author Levi Buzolic
+ */
+
+"use strict";
+
+//------------------------------------------------------------------------------
+// Rule Definition
+//------------------------------------------------------------------------------
+
 module.exports = {
   meta: {
-    docs: {}
+    docs: {
+      description: "disallow .only blocks in tests",
+      category: "Possible Errors",
+    }
   },
 
-  create: function(context) {
-    var regex = /^(describe|it|context|test|tape)$/;
+  create(context) {
+    const regex = /^(describe|it|context|test|tape)$/;
 
     return {
       Identifier: function(node) {
