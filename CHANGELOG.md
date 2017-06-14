@@ -1,3 +1,10 @@
+# v2.0.0
+
+ * Updated rule format to ESLint 3
+ * Updated ESLInt dependency to `>=3.0.0`
+ * Updated node engine to `>=4.0.0`
+ * Get CircleCI up and running
+
 # v1.2.0
 
  * Added rules for catching `.only` blocks for `test`, `context` and `tape`
