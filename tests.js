@@ -4,14 +4,15 @@ const ruleTester = new RuleTester();
 
 ruleTester.run('no-only-tests', rules['no-only-tests'], {
   valid: [
-    {code: 'describe("Some describe block", function() {});'},
-    {code: 'it("Some assertion", function() {});'},
-    {code: 'xit.only("Some assertion", function() {});'},
-    {code: 'xdescribe.only("Some describe block", function() {});'},
-    {code: 'xcontext.only("A context block", function() {});'},
-    {code: 'xtape.only("A tape block", function() {});'},
-    {code: 'xtest.only("A test block", function() {});'},
-    {code: 'other.only("An other block", function() {});'}
+    'describe("Some describe block", function() {});',
+    'it("Some assertion", function() {});',
+    'xit.only("Some assertion", function() {});',
+    'xdescribe.only("Some describe block", function() {});',
+    'xcontext.only("A context block", function() {});',
+    'xtape.only("A tape block", function() {});',
+    'xtest.only("A test block", function() {});',
+    'other.only("An other block", function() {});',
+    'var args = {only: "test"}',
   ],
 
   invalid: [{
