@@ -22,7 +22,7 @@ module.exports = {
 
     return {
       Identifier: function(node) {
-        if (node.name === 'only' && regex.test(node.parent.object.name)) {
+        if (node.name === 'only' && node.parent && node.parent.object && regex.test(node.parent.object.name)) {
           context.report(node, node.parent.object.name + '.only not permitted');
         }
       }
