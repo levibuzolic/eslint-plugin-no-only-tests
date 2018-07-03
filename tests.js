@@ -12,7 +12,8 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
     'xtape.only("A tape block", function() {});',
     'xtest.only("A test block", function() {});',
     'other.only("An other block", function() {});',
-    'var args = {only: "test"}',
+    'var args = {only: "test"};',
+    'it("should pass meta only through", function() {});'
   ],
 
   invalid: [{
