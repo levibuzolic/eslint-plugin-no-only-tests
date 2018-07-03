@@ -1,3 +1,7 @@
+# v2.0.1
+
+ * Fixed major bug where rule would cause errors for objects with key `only` - #7 Thanks @bendemboski
+
 # v2.0.0
 
  * Updated rule format to ESLint 3
