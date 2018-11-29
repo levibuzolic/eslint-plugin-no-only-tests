@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-no-only-tests",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "ESLint rule for .only blocks in mocha tests",
   "keywords": [
     "eslint",
@@ -10,7 +10,8 @@
     "rule",
     "only",
     "describe",
-    "it"
+    "it",
+    "fixture"
   ],
   "author": "Levi Buzolic",
   "main": "index.js",
