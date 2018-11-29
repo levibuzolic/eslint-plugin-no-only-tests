@@ -4,7 +4,7 @@
 
 ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS testing libraries.
 
-Currently matches the following test blocks: `describe`, `it`, `context`, `tape`, `test`, 'fixture'.
+Currently matches the following test blocks: `describe`, `it`, `context`, `tape`, `test`, `fixture`.
 
 Designed to prevent you from committing `.only` tests to CI, disabling tests for your whole team.
 
