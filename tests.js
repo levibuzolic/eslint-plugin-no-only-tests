@@ -31,6 +31,9 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
   }, {
     code: 'tape.only("A tape", function() {});',
     errors: [{message: 'tape.only not permitted'}]
+  }, {
+    code: 'fixture.only("A fixture", function() {});',
+    errors: [{message: 'fixture.only not permitted'}]
   }]
 });
 
