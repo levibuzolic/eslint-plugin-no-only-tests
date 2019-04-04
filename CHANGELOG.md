@@ -1,10 +1,14 @@
+# v2.2.0
+
+ * Added rule for catching `.only` blocks for `serial` - #9 @IevgenRagulin
+
 # v2.1.0
 
- * Added rule for catching `.only` blocks for `fixture` - #8 Thanks @roughy
+ * Added rule for catching `.only` blocks for `fixture` - #8 @roughy
 
 # v2.0.1
 
- * Fixed major bug where rule would cause errors for objects with key `only` - #7 Thanks @bendemboski
+ * Fixed major bug where rule would cause errors for objects with key `only` - #7 @bendemboski
 
 # v2.0.0
 
