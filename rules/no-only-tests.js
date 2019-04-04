@@ -18,7 +18,7 @@ module.exports = {
   },
 
   create(context) {
-    const regex = /^(describe|it|context|test|tape|fixture)$/;
+    const regex = /^(describe|it|context|test|tape|fixture|serial)$/;
 
     return {
       Identifier: function(node) {

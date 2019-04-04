@@ -34,6 +34,9 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
   }, {
     code: 'fixture.only("A fixture", function() {});',
     errors: [{message: 'fixture.only not permitted'}]
+  }, {
+    code: 'serial.only("A serial test", function() {});',
+    errors: [{message: 'serial.only not permitted'}]
   }]
 });
 
