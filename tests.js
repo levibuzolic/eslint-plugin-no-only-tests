@@ -13,7 +13,16 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
     'xtest.only("A test block", function() {});',
     'other.only("An other block", function() {});',
     'var args = {only: "test"};',
-    'it("should pass meta only through", function() {});'
+    'it("should pass meta only through", function() {});',
+    'obscureTestBlock.only("An obscure testing library test works unless options are supplied", function() {});',
+    {
+      options: [{block: ['it']}],
+      code: 'test.only("Options will exclude this from being caught", function() {});',
+    },
+    {
+      options: [{focus: ['focus']}],
+      code: 'test.only("Options will exclude this from being caught", function() {});',
+    }
   ],
 
   invalid: [{
@@ -37,6 +46,14 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
   }, {
     code: 'serial.only("A serial test", function() {});',
     errors: [{message: 'serial.only not permitted'}]
+  }, {
+    options: [{block: ['obscureTestBlock']}],
+    code: 'obscureTestBlock.only("An obscure testing library test", function() {});',
+    errors: [{message: 'obscureTestBlock.only not permitted'}]
+  }, {
+    options: [{focus: ['focus']}],
+    code: 'test.focus("An alternative focus function", function() {});',
+    errors: [{message: 'test.focus not permitted'}]
   }]
 });
 

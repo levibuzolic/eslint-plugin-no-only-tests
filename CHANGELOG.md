@@ -1,3 +1,7 @@
+# v2.3.0
+
+ * Allow test block names to be specified in options - #10
+
 # v2.2.0
 
  * Added rule for catching `.only` blocks for `serial` - #9 @IevgenRagulin
