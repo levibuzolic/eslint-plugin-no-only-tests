@@ -1,3 +1,4 @@
 .circleci/config.yml
 .prettierrc
 tests.js
+yarn.lock
