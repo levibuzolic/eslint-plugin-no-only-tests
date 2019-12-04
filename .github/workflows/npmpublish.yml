@@ -5,7 +5,8 @@ on:
     types: [created]
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -18,7 +19,8 @@ jobs:
       - run: npm test
 
   publish-npm:
-    needs: build
+    name: Publish NPM
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -29,13 +31,13 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
-      - run: yarn run test
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   publish-gpr:
-    needs: build
+    name: Publish GPR
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -47,7 +49,6 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
-      - run: yarn run test
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
