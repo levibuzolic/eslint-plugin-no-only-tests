@@ -12,7 +12,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
       - run: npm test
 
   publish-npm:
