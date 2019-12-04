@@ -24,7 +24,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: yarn
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
       - run: yarn run test
       - run: npm publish
         env:
@@ -40,7 +42,9 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@levibuzolic'
-      - run: yarn
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
       - run: yarn run test
       - run: npm publish
         env:
