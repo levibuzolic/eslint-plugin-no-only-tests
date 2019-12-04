@@ -1,6 +1,6 @@
 # eslint-plugin-no-only-tests
 
-[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![CircleCI](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests.svg?style=shield)](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests)
+[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![CircleCI](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests.svg?style=shield)](https://circleci.com/gh/levibuzolic/eslint-plugin-no-only-tests) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
 
 ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS testing libraries.
 
