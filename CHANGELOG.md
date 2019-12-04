@@ -1,7 +1,11 @@
+# v2.4.0
+
+ * Add support for defining 2 levels deep in blocks (ie. `ava.default`)
+
 # v2.3.1
 
  * Bump js-yaml from 3.13.0 to 3.13.1 due to security vulnerability - #11
- 
+
 # v2.3.0
 
  * Allow test block names to be specified in options - #10

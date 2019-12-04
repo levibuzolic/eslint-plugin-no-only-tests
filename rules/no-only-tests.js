@@ -49,15 +49,28 @@ module.exports = {
 
     return {
       Identifier(node) {
-        if (
-          focus.indexOf(node.name) != -1 &&
-          node.parent &&
-          node.parent.object &&
-          block.indexOf(node.parent.object.name) != -1
-        ) {
-          context.report(node, node.parent.object.name + '.' + node.name + ' not permitted');
+        var parentObject = node.parent && node.parent.object;
+        if (parentObject == null) return;
+        if (focus.indexOf(node.name) === -1) return;
+
+        var parentName = parentObject.name;
+
+        if (parentName != null && block.indexOf(parentName) != -1) {
+          context.report(node, parentName + '.' + node.name + ' not permitted');
+        }
+
+        var parentParentName = dotName(parentObject);
+
+        if (parentParentName != null && block.indexOf(parentParentName) != -1) {
+          context.report(node, parentParentName + '.' + node.name + ' not permitted');
         }
       },
     };
   },
 };
+
+function dotName(object) {
+  if (object.property && object.property.name && object.object && object.object.name)
+    return object.object.name + '.' + object.property.name;
+  return null;
+}
