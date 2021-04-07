@@ -20,6 +20,7 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/levibuzolic/eslint-plugin-no-only-tests',
     },
+    fixable: true,
     schema: [
       {
         type: 'object',
@@ -55,14 +56,26 @@ module.exports = {
 
         var parentName = parentObject.name;
 
+        function fix(fixer) {
+          return fixer.removeRange([node.range[0] - 1, node.range[1]]);
+        }
+
         if (parentName != null && block.indexOf(parentName) != -1) {
-          context.report(node, parentName + '.' + node.name + ' not permitted');
+          context.report({
+            node,
+            message: parentName + '.' + node.name + ' not permitted',
+            fix
+          });
         }
 
         var parentParentName = dotName(parentObject);
 
         if (parentParentName != null && block.indexOf(parentParentName) != -1) {
-          context.report(node, parentParentName + '.' + node.name + ' not permitted');
+          context.report({
+            node,
+            message: parentParentName + '.' + node.name + ' not permitted',
+            fix
+          });
         }
       },
     };
