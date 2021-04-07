@@ -18,7 +18,7 @@ NPM | Yarn
 ---|---
 `npm install --save-dev eslint eslint-plugin-no-only-tests` | `yarn add --dev eslint eslint-plugin-no-only-tests`
 
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
+> **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
 
 ## Usage
 
