@@ -1,3 +1,7 @@
+# v2.5.0
+
+ * Add support for auto fixing violations - #19 @tgreen7
+
 # v2.4.0
 
  * Add support for defining 2 levels deep in blocks (ie. `ava.default`)

@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-no-only-tests",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "ESLint rule for .only blocks in mocha tests",
   "keywords": [
     "eslint",
