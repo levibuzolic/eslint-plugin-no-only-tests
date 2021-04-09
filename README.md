@@ -14,7 +14,7 @@ As of v2.3 you can now override the test blocks and focus functions.
 
 First you'll need to install [ESLint](http://eslint.org) then the plugin:
 
-```
+```bash
 npm install --save-dev eslint eslint-plugin-no-only-tests
 # or
 yarn add --dev eslint eslint-plugin-no-only-tests
