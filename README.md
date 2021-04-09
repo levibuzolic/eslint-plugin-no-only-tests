@@ -14,9 +14,11 @@ As of v2.3 you can now override the test blocks and focus functions.
 
 First you'll need to install [ESLint](http://eslint.org) then the plugin:
 
-NPM | Yarn
----|---
-`npm install --save-dev eslint eslint-plugin-no-only-tests` | `yarn add --dev eslint eslint-plugin-no-only-tests`
+```
+npm install --save-dev eslint eslint-plugin-no-only-tests
+# or
+yarn add --dev eslint eslint-plugin-no-only-tests
+```
 
 > **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
 
