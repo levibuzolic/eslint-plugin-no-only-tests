@@ -54,26 +54,17 @@ module.exports = {
         if (parentObject == null) return;
         if (focus.indexOf(node.name) === -1) return;
 
-        var parentName = parentObject.name;
+        var callPath = getCallPath(node.parent).join('.')
 
         function fix(fixer) {
           return fixer.removeRange([node.range[0] - 1, node.range[1]]);
         }
 
-        if (parentName != null && block.indexOf(parentName) != -1) {
+        // comparison guarantees that matching is done with the beginning of call path
+        if (block.find((b) => callPath.split(b)[0] === '')) {
           context.report({
             node,
-            message: parentName + '.' + node.name + ' not permitted',
-            fix
-          });
-        }
-
-        var parentParentName = dotName(parentObject);
-
-        if (parentParentName != null && block.indexOf(parentParentName) != -1) {
-          context.report({
-            node,
-            message: parentParentName + '.' + node.name + ' not permitted',
+            message: callPath + ' not permitted',
             fix
           });
         }
@@ -82,8 +73,16 @@ module.exports = {
   },
 };
 
-function dotName(object) {
-  if (object.property && object.property.name && object.object && object.object.name)
-    return object.object.name + '.' + object.property.name;
-  return null;
+function getCallPath (node, path = []) {
+  if (node) {
+    const nodeName = node.name || (node.property && node.property.name)
+    if (node.object) {
+      return getCallPath(node.object, [nodeName, ...path])
+    }
+    if (node.callee) {
+      return getCallPath(node.callee, path)
+    }
+    return [nodeName, ...path]
+  }
+  return path
 }

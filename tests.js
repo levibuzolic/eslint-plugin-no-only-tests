@@ -74,6 +74,11 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       errors: [{message: 'ava.default.only not permitted'}],
     },
     {
+      code: 'it.default.before(console.log).only("Some describe block", function() {});',
+      errors: [{message: 'it.default.before.only not permitted'}],
+      output: 'it.default.before(console.log)("Some describe block", function() {});'
+    },
+    {
       options: [{focus: ['focus']}],
       code: 'test.focus("An alternative focus function", function() {});',
       output: 'test("An alternative focus function", function() {});',
