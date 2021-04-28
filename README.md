@@ -55,3 +55,21 @@ If you use a testing framework that uses an unsupported block name, or a differe
 ```
 
 The above example will catch any uses of `test.only`, `test.focus`, `it.only`, `it.focus`, `assert.only` and `assert.focus`.
+
+This rule supports autofixing only when the `fix` option is set to `true` to avoid changing runtime code unintentionally when configured in an editor.
+
+```json
+{
+  "rules": {
+    "no-only-tests/no-only-tests": ["error", {"fix": true}]
+  }
+}
+```
+
+## Options
+
+Option | Type | Description
+---|---|---
+`block` | `Array<string>` | Specify the block names that your testing framework uses. Defaults to `["describe", "it", "context", "test", "tape", "fixture", "serial"]`
+`focus` | `Array<string>` | Specify the focus scope that your testing framework uses. Defaults to `["only"]`
+`fix` | `boolean` | Enable this rule to auto-fix violations, useful for a pre-commit hook, not recommended for users with auto-fixing enabled in their editor. Defaults to `false`
