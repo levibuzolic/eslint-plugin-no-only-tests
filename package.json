@@ -15,6 +15,10 @@
   ],
   "author": "Levi Buzolic",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "rules/"
+  ],
   "scripts": {
     "test": "node tests.js"
   },
