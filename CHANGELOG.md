@@ -1,3 +1,7 @@
+# v2.6.0
+
+ * Disable auto fixing by default, allow it to be optionally enabled.
+
 # v2.5.0
 
  * Add support for auto fixing violations - #19 @tgreen7
