@@ -1,6 +1,6 @@
 # v2.6.0
 
- * Disable auto fixing by default, allow it to be optionally enabled.
+ * Disable auto fixing by default, allow it to be optionally enabled. #26
 
 # v2.5.0
 
