@@ -1,0 +1,4 @@
+.github/
+.prettierrc
+.git
+tests.js
