@@ -48,9 +48,10 @@ module.exports = {
     ],
   },
   create(context) {
-    var block = (context.options[0] || {}).block || BLOCK_DEFAULTS;
-    var focus = (context.options[0] || {}).focus || FOCUS_DEFAULTS;
-    var fix = !!(context.options[0] || {}).fix;
+    var options = context.options[0] || {};
+    var block = options.block || BLOCK_DEFAULTS;
+    var focus = options.focus || FOCUS_DEFAULTS;
+    var fix = !!options.fix;
 
     return {
       Identifier(node) {
@@ -76,12 +77,8 @@ module.exports = {
 function getCallPath(node, path = []) {
   if (node) {
     const nodeName = node.name || (node.property && node.property.name);
-    if (node.object) {
-      return getCallPath(node.object, [nodeName, ...path]);
-    }
-    if (node.callee) {
-      return getCallPath(node.callee, path);
-    }
+    if (node.object) return getCallPath(node.object, [nodeName, ...path]);
+    if (node.callee) return getCallPath(node.callee, path);
     return [nodeName, ...path];
   }
   return path;
