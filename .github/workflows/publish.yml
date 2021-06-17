@@ -26,10 +26,12 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: yarn install
-      - run: yarn publish
+      - name: Install dependencies
+        run: yarn install
+      - name: Publish package to NPM
+        run: yarn publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
 #   publish-gpr:
 #     name: Publish GPR
