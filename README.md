@@ -37,20 +37,16 @@ Add `no-only-tests` to the plugins section of your `.eslintrc` configuration fil
 Then configure the rules you want to use under the rules section.
 
 ```json
-{
-  "rules": {
-    "no-only-tests/no-only-tests": "error"
-  }
+"rules": {
+  "no-only-tests/no-only-tests": "error"
 }
 ```
 
 If you use a testing framework that uses an unsupported block name, or a different way of focusing test (something other than `.only`) you can specify an array of blocks and focus methods to match in the options.
 
 ```json
-{
-  "rules": {
-    "no-only-tests/no-only-tests": ["error", {"block": ["test", "it", "assert"], "focus": ["only", "focus"]}]
-  }
+"rules": {
+  "no-only-tests/no-only-tests": ["error", {"block": ["test", "it", "assert"], "focus": ["only", "focus"]}]
 }
 ```
 
@@ -59,10 +55,8 @@ The above example will catch any uses of `test.only`, `test.focus`, `it.only`, `
 This rule supports autofixing only when the `fix` option is set to `true` to avoid changing runtime code unintentionally when configured in an editor.
 
 ```json
-{
-  "rules": {
-    "no-only-tests/no-only-tests": ["error", {"fix": true}]
-  }
+"rules": {
+  "no-only-tests/no-only-tests": ["error", {"fix": true}]
 }
 ```
 
