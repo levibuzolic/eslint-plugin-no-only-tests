@@ -48,18 +48,18 @@ module.exports = {
     ],
   },
   create(context) {
-    var options = context.options[0] || {};
-    var block = options.block || BLOCK_DEFAULTS;
-    var focus = options.focus || FOCUS_DEFAULTS;
-    var fix = !!options.fix;
+    const options = context.options[0] || {};
+    const block = options.block || BLOCK_DEFAULTS;
+    const focus = options.focus || FOCUS_DEFAULTS;
+    const fix = !!options.fix;
 
     return {
       Identifier(node) {
-        var parentObject = node.parent && node.parent.object;
+        const parentObject = node.parent && node.parent.object;
         if (parentObject == null) return;
         if (focus.indexOf(node.name) === -1) return;
 
-        var callPath = getCallPath(node.parent).join('.');
+        const callPath = getCallPath(node.parent).join('.');
 
         // comparison guarantees that matching is done with the beginning of call path
         if (block.find(b => callPath.split(b)[0] === '')) {

@@ -2,22 +2,22 @@
 
 [![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
 
-ESLint rule for `.only` tests in [mocha](https://mochajs.org/) and other JS testing libraries.
+ESLint rule for `.only` tests in [mocha](https://mochajs.org/), [jest](https://jestjs.io/), [jasmin](https://jasmine.github.io/) and other JS testing libraries.
 
-Currently matches the following test blocks by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`.
+By default the following test blocks are matched by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`.
 
-Designed to prevent you from committing `.only` tests to CI, disabling tests for your whole team.
+Designed to prevent you from committing focused (`.only`) tests to CI, which may prevent your entire test suite from running.
 
-As of v2.3 you can now override the test blocks and focus functions.
+If the testing framework you use doesn't use `.only` to focus tests, you can override the matchers with [options](#options).
 
 ## Installation
 
-First you'll need to install [ESLint](http://eslint.org) then the plugin:
+[Install ESLint](https://eslint.org/docs/user-guide/getting-started) if you haven't done so already, then install `eslint-plugin-no-only-tests`:
 
 ```bash
-npm install --save-dev eslint eslint-plugin-no-only-tests
+npm install --save-dev eslint-plugin-no-only-tests
 # or
-yarn add --dev eslint eslint-plugin-no-only-tests
+yarn add --dev eslint-plugin-no-only-tests
 ```
 
 > **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
@@ -27,14 +27,12 @@ yarn add --dev eslint eslint-plugin-no-only-tests
 Add `no-only-tests` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
 
 ```json
-{
-  "plugins": [
-    "no-only-tests"
-  ]
-}
+"plugins": [
+  "no-only-tests"
+]
 ```
 
-Then configure the rules you want to use under the rules section.
+Then add the rule to the rules section of your `.eslintrc`:
 
 ```json
 "rules": {
@@ -42,11 +40,16 @@ Then configure the rules you want to use under the rules section.
 }
 ```
 
-If you use a testing framework that uses an unsupported block name, or a different way of focusing test (something other than `.only`) you can specify an array of blocks and focus methods to match in the options.
+If you use a testing framework that uses a test block name that isn't present in the [defaults](#options), or a different way of focusing test (something other than `.only`) you can specify an array of blocks and focus methods to match in the options.
 
 ```json
 "rules": {
-  "no-only-tests/no-only-tests": ["error", {"block": ["test", "it", "assert"], "focus": ["only", "focus"]}]
+  "no-only-tests/no-only-tests": [
+    "error", {
+      "block": ["test", "it", "assert"],
+      "focus": ["only", "focus"]
+    }
+  ]
 }
 ```
 
