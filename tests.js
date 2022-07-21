@@ -12,6 +12,7 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
     'xtape.only("A tape block", function() {});',
     'xtest.only("A test block", function() {});',
     'other.only("An other block", function() {});',
+    'testResource.only("A test resource block", function() {});',
     'var args = {only: "test"};',
     'it("should pass meta only through", function() {});',
     'obscureTestBlock.only("An obscure testing library test works unless options are supplied", function() {});',
@@ -150,6 +151,12 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'test.focus("An alternative focus function", function() {});',
       output: 'test("An alternative focus function", function() {});',
       errors: [{message: 'test.focus not permitted'}],
+    },
+    {
+      options: [{block: ['test*']}],
+      code: 'testResource.only("A test resource block", function() {});',
+      output: 'testResource.only("A test resource block", function() {});',
+      errors: [{message: 'testResource.only not permitted'}],
     },
   ],
 });

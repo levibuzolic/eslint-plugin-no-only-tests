@@ -9,8 +9,11 @@
 // Rule Definition
 //------------------------------------------------------------------------------
 
-const BLOCK_DEFAULTS = ['describe', 'it', 'context', 'test', 'tape', 'fixture', 'serial'];
-const FOCUS_DEFAULTS = ['only'];
+const defaultOptions = {
+  block: ['describe', 'it', 'context', 'test', 'tape', 'fixture', 'serial'],
+  focus: ['only'],
+  fix: false,
+};
 
 module.exports = {
   meta: {
@@ -31,6 +34,7 @@ module.exports = {
               type: 'string',
             },
             uniqueItems: true,
+            default: defaultOptions.block,
           },
           focus: {
             type: 'array',
@@ -38,9 +42,11 @@ module.exports = {
               type: 'string',
             },
             uniqueItems: true,
+            default: defaultOptions.focus,
           },
           fix: {
             type: 'boolean',
+            default: defaultOptions.fix,
           },
         },
         additionalProperties: false,
@@ -48,9 +54,9 @@ module.exports = {
     ],
   },
   create(context) {
-    const options = context.options[0] || {};
-    const block = options.block || BLOCK_DEFAULTS;
-    const focus = options.focus || FOCUS_DEFAULTS;
+    const options = Object.assign({}, defaultOptions, context.options[0]);
+    const blocks = options.block || [];
+    const focus = options.focus || [];
     const fix = !!options.fix;
 
     return {
@@ -62,7 +68,13 @@ module.exports = {
         const callPath = getCallPath(node.parent).join('.');
 
         // comparison guarantees that matching is done with the beginning of call path
-        if (block.find(b => callPath.split(b)[0] === '')) {
+        if (
+          blocks.find(block => {
+            // Allow wildcard tail matching of blocks when ending in a `*`
+            if (block.endsWith('*')) return callPath.startsWith(block.replace(/\*$/, ''));
+            return callPath.startsWith(`${block}.`);
+          })
+        ) {
           context.report({
             node,
             message: callPath + ' not permitted',
