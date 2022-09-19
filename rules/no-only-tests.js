@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 const defaultOptions = {
-  block: ['describe', 'it', 'context', 'test', 'tape', 'fixture', 'serial'],
+  block: ['describe', 'it', 'context', 'test', 'tape', 'fixture', 'serial', 'Feature', 'Scenario', 'Given', 'And', 'When', 'Then'],
   focus: ['only'],
   fix: false,
 };
