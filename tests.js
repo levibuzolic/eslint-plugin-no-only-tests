@@ -158,6 +158,42 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       output: 'testResource.only("A test resource block", function() {});',
       errors: [{message: 'testResource.only not permitted'}],
     },
+    {
+      options: [{fix: true}],
+      code: 'Feature.only("Some Feature", function() {});',
+      output: 'Feature("Some Feature", function() {});',
+      errors: [{message: 'Feature.only not permitted'}],
+    },
+    {
+      options: [{fix: true}],
+      code: 'Scenario.only("Some Scenario", function() {});',
+      output: 'Scenario("Some Scenario", function() {});',
+      errors: [{message: 'Scenario.only not permitted'}],
+    },
+    {
+      options: [{fix: true}],
+      code: 'Given.only("Some assertion", function() {});',
+      output: 'Given("Some assertion", function() {});',
+      errors: [{message: 'Given.only not permitted'}],
+    },
+    {
+      options: [{fix: true}],
+      code: 'And.only("Some assertion", function() {});',
+      output: 'And("Some assertion", function() {});',
+      errors: [{message: 'And.only not permitted'}],
+    },
+    {
+      options: [{fix: true}],
+      code: 'When.only("Some assertion", function() {});',
+      output: 'When("Some assertion", function() {});',
+      errors: [{message: 'When.only not permitted'}],
+    },
+    {
+      options: [{fix: true}],
+      code: 'Then.only("Some assertion", function() {});',
+      output: 'Then("Some assertion", function() {});',
+      errors: [{message: 'Then.only not permitted'}],
+    },
   ],
 });
 
