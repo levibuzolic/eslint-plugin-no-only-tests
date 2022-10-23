@@ -4,7 +4,7 @@
 
 ESLint rule for `.only` tests in [mocha](https://mochajs.org/), [jest](https://jestjs.io/), [jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
 
-By default the following test blocks are matched by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`.
+The following test blocks are matched by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`, `Feature`, `Scenario`, `Given`, `And`, `When` and `Then`.
 
 Designed to prevent you from committing focused (`.only`) tests to CI, which may prevent your entire test suite from running.
 
