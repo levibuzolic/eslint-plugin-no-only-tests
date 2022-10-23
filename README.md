@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
 
-ESLint rule for `.only` tests in [mocha](https://mochajs.org/), [jest](https://jestjs.io/), [jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
+ESLint rule for `.only` tests in [Mocha](https://mochajs.org/), [Jest](https://jestjs.io/), [Jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
 
 The following test blocks are matched by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`, `Feature`, `Scenario`, `Given`, `And`, `When` and `Then`.
 
