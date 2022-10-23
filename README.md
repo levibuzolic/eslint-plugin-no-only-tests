@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
 
-ESLint rule for `.only` tests in [mocha](https://mochajs.org/), [jest](https://jestjs.io/), [jasmin](https://jasmine.github.io/) and other JS testing libraries.
+ESLint rule for `.only` tests in [mocha](https://mochajs.org/), [jest](https://jestjs.io/), [jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
 
 By default the following test blocks are matched by default: `describe`, `it`, `context`, `tape`, `test`, `fixture`, `serial`.
 
@@ -55,7 +55,7 @@ If you use a testing framework that uses a test block name that isn't present in
 
 The above example will catch any uses of `test.only`, `test.focus`, `it.only`, `it.focus`, `assert.only` and `assert.focus`.
 
-This rule supports autofixing only when the `fix` option is set to `true` to avoid changing runtime code unintentionally when configured in an editor.
+This rule supports opt-in autofixing when the `fix` option is set to `true` to avoid changing runtime code unintentionally when configured in an editor.
 
 ```json
 "rules": {
@@ -67,6 +67,6 @@ This rule supports autofixing only when the `fix` option is set to `true` to avo
 
 Option | Type | Description
 ---|---|---
-`block` | `Array<string>` | Specify the block names that your testing framework uses. Add a `*` to the end of any string to enable prefix matching (ie. `test*` will match `testExample.only`)<br>Defaults to `["describe", "it", "context", "test", "tape", "fixture", "serial"]`
+`block` | `Array<string>` | Specify the block names that your testing framework uses. Add a `*` to the end of any string to enable prefix matching (ie. `test*` will match `testExample.only`)<br>Defaults to `["describe", "it", "context", "test", "tape", "fixture", "serial", "Feature", "Scenario", "Given", "And", "When", "Then"]`
 `focus` | `Array<string>` | Specify the focus scope that your testing framework uses.<br>Defaults to `["only"]`
 `fix` | `boolean` | Enable this rule to auto-fix violations, useful for a pre-commit hook, not recommended for users with auto-fixing enabled in their editor.<br>Defaults to `false`
