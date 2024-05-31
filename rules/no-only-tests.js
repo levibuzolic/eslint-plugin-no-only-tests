@@ -10,8 +10,23 @@
 //------------------------------------------------------------------------------
 
 const defaultOptions = {
-  block: ['describe', 'it', 'context', 'test', 'tape', 'fixture', 'serial', 'Feature', 'Scenario', 'Given', 'And', 'When', 'Then'],
+  block: [
+    'describe',
+    'it',
+    'context',
+    'test',
+    'tape',
+    'fixture',
+    'serial',
+    'Feature',
+    'Scenario',
+    'Given',
+    'And',
+    'When',
+    'Then',
+  ],
   focus: ['only'],
+  functions: [],
   fix: false,
 };
 
@@ -44,6 +59,14 @@ module.exports = {
             uniqueItems: true,
             default: defaultOptions.focus,
           },
+          functions: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+            uniqueItems: true,
+            default: defaultOptions.functions,
+          },
           fix: {
             type: 'boolean',
             default: defaultOptions.fix,
@@ -57,10 +80,18 @@ module.exports = {
     const options = Object.assign({}, defaultOptions, context.options[0]);
     const blocks = options.block || [];
     const focus = options.focus || [];
+    const functions = options.functions || [];
     const fix = !!options.fix;
 
     return {
       Identifier(node) {
+        if (functions.length && functions.indexOf(node.name) > -1) {
+          context.report({
+            node,
+            message: node.name + ' not permitted',
+          });
+        }
+
         const parentObject = node.parent && node.parent.object;
         if (parentObject == null) return;
         if (focus.indexOf(node.name) === -1) return;
