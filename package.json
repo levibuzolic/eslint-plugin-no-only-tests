@@ -23,10 +23,14 @@
     "test": "node tests.js"
   },
   "devDependencies": {
-    "eslint": ">=3.0.0"
+    "@biomejs/biome": "^1.8.0",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.14.2",
+    "eslint": ">=3.0.0",
+    "typescript": "^5.4.5"
   },
   "engines": {
-    "node": ">=5.0.0"
+    "node": ">=16.0.0"
   },
   "license": "MIT",
   "repository": {
