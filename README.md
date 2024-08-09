@@ -65,8 +65,9 @@ This rule supports opt-in autofixing when the `fix` option is set to `true` to a
 
 ## Options
 
-Option | Type | Description
----|---|---
-`block` | `string[]` | Specify the block names that your testing framework uses. Add a `*` to the end of any string to enable prefix matching (ie. `test*` will match `testExample.only`)<br>Defaults to `["describe", "it", "context", "test", "tape", "fixture", "serial", "Feature", "Scenario", "Given", "And", "When", "Then"]`
-`focus` | `string[]` | Specify the focus scope that your testing framework uses.<br>Defaults to `["only"]`
-`fix` | `boolean` | Enable this rule to auto-fix violations, useful for a pre-commit hook, not recommended for users with auto-fixing enabled in their editor.<br>Defaults to `false`
+| Option      | Type       | Description                                                                                                                                                                                                                                                                                                   |
+| ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `block`     | `string[]` | Specify the block names that your testing framework uses. Add a `*` to the end of any string to enable prefix matching (ie. `test*` will match `testExample.only`)<br>Defaults to `["describe", "it", "context", "test", "tape", "fixture", "serial", "Feature", "Scenario", "Given", "And", "When", "Then"]` |
+| `focus`     | `string[]` | Specify the focus scope that your testing framework uses.<br>Defaults to `["only"]`                                                                                                                                                                                                                           |
+| `functions` | `string[]` | Specify not permitted functions. Good examples are `fit` or `xit`.<br>Defaults to `[]` (disabled)                                                                                                                                                                                                             |
+| `fix`       | `boolean`  | Enable this rule to auto-fix violations, useful for a pre-commit hook, not recommended for users with auto-fixing enabled in their editor.<br>Defaults to `false`                                                                                                                                             |
