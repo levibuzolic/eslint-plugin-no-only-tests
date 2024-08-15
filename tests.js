@@ -24,6 +24,10 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       options: [{focus: ['focus']}],
       code: 'test.only("Options will exclude this from being caught", function() {});',
     },
+    {
+      options: [{functions: ['fit', 'xit']}],
+      code: 'it("Options will exclude this from being caught", function() {});',
+    },
   ],
 
   invalid: [
@@ -193,6 +197,11 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'Then.only("Some assertion", function() {});',
       output: 'Then("Some assertion", function() {});',
       errors: [{message: 'Then.only not permitted'}],
+    },
+    {
+      options: [{functions: ['fit', 'xit']}],
+      code: 'xit("No skipped tests", function() {});',
+      errors: [{message: 'xit not permitted'}],
     },
   ],
 });
