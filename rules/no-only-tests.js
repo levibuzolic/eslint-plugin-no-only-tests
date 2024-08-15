@@ -3,12 +3,9 @@
  * @author Levi Buzolic
  */
 
-'use strict';
+/** @typedef {{block?: string[], focus?: string[], functions?: string[], fix?: boolean}} Options */
 
-//------------------------------------------------------------------------------
-// Rule Definition
-//------------------------------------------------------------------------------
-
+/** @type {Options} */
 const defaultOptions = {
   block: [
     'describe',
@@ -30,6 +27,7 @@ const defaultOptions = {
   fix: false,
 };
 
+/** @type {import('eslint').Rule.RuleModule} */
 module.exports = {
   meta: {
     docs: {
@@ -38,7 +36,7 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/levibuzolic/eslint-plugin-no-only-tests',
     },
-    fixable: true,
+    fixable: 'code',
     schema: [
       {
         type: 'object',
@@ -77,6 +75,7 @@ module.exports = {
     ],
   },
   create(context) {
+    /** @type {Options} */
     const options = Object.assign({}, defaultOptions, context.options[0]);
     const blocks = options.block || [];
     const focus = options.focus || [];
@@ -88,11 +87,11 @@ module.exports = {
         if (functions.length && functions.indexOf(node.name) > -1) {
           context.report({
             node,
-            message: node.name + ' not permitted',
+            message: `${node.name} not permitted`,
           });
         }
 
-        const parentObject = node.parent && node.parent.object;
+        const parentObject = 'object' in node.parent ? node.parent.object : undefined;
         if (parentObject == null) return;
         if (focus.indexOf(node.name) === -1) return;
 
@@ -106,10 +105,16 @@ module.exports = {
             return callPath.startsWith(`${block}.`);
           })
         ) {
+          const rangeStart = node.range?.[0];
+          const rangeEnd = node.range?.[1];
+
           context.report({
             node,
-            message: callPath + ' not permitted',
-            fix: fix ? fixer => fixer.removeRange([node.range[0] - 1, node.range[1]]) : undefined,
+            message: `${callPath} not permitted`,
+            fix:
+              fix && rangeStart != null && rangeEnd != null
+                ? fixer => fixer.removeRange([rangeStart - 1, rangeEnd])
+                : undefined,
           });
         }
       },
@@ -117,12 +122,24 @@ module.exports = {
   },
 };
 
+/**
+ *
+ * @param {import('estree').Node} node
+ * @param {string[]} path
+ * @returns
+ */
 function getCallPath(node, path = []) {
   if (node) {
-    const nodeName = node.name || (node.property && node.property.name);
-    if (node.object) return getCallPath(node.object, [nodeName, ...path]);
-    if (node.callee) return getCallPath(node.callee, path);
-    return [nodeName, ...path];
+    const nodeName =
+      'name' in node && node.name
+        ? node.name
+        : 'property' in node && node.property && 'name' in node.property
+        ? node.property?.name
+        : undefined;
+    if ('object' in node && node.object && nodeName) return getCallPath(node.object, [nodeName, ...path]);
+    if ('callee' in node && node.callee) return getCallPath(node.callee, path);
+    if (nodeName) return [nodeName, ...path];
+    return path;
   }
   return path;
 }

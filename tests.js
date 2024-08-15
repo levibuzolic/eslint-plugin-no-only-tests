@@ -33,60 +33,49 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
   invalid: [
     {
       code: 'describe.only("Some describe block", function() {});',
-      output: 'describe.only("Some describe block", function() {});',
       errors: [{message: 'describe.only not permitted'}],
     },
     {
       code: 'it.only("Some assertion", function() {});',
-      output: 'it.only("Some assertion", function() {});',
       errors: [{message: 'it.only not permitted'}],
     },
     {
       code: 'context.only("Some context", function() {});',
-      output: 'context.only("Some context", function() {});',
       errors: [{message: 'context.only not permitted'}],
     },
     {
       code: 'test.only("Some test", function() {});',
-      output: 'test.only("Some test", function() {});',
       errors: [{message: 'test.only not permitted'}],
     },
     {
       code: 'tape.only("A tape", function() {});',
-      output: 'tape.only("A tape", function() {});',
       errors: [{message: 'tape.only not permitted'}],
     },
     {
       code: 'fixture.only("A fixture", function() {});',
-      output: 'fixture.only("A fixture", function() {});',
       errors: [{message: 'fixture.only not permitted'}],
     },
     {
       code: 'serial.only("A serial test", function() {});',
-      output: 'serial.only("A serial test", function() {});',
       errors: [{message: 'serial.only not permitted'}],
     },
     {
       options: [{block: ['obscureTestBlock']}],
       code: 'obscureTestBlock.only("An obscure testing library test", function() {});',
-      output: 'obscureTestBlock.only("An obscure testing library test", function() {});',
       errors: [{message: 'obscureTestBlock.only not permitted'}],
     },
     {
       options: [{block: ['ava.default']}],
       code: 'ava.default.only("Block with dot", function() {});',
-      output: 'ava.default.only("Block with dot", function() {});',
       errors: [{message: 'ava.default.only not permitted'}],
     },
     {
       code: 'it.default.before(console.log).only("Some describe block", function() {});',
-      output: 'it.default.before(console.log).only("Some describe block", function() {});',
       errors: [{message: 'it.default.before.only not permitted'}],
     },
     {
       options: [{focus: ['focus']}],
       code: 'test.focus("An alternative focus function", function() {});',
-      output: 'test.focus("An alternative focus function", function() {});',
       errors: [{message: 'test.focus not permitted'}],
     },
     // As above, but with fix: true option to enable auto-fixing
@@ -159,7 +148,6 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
     {
       options: [{block: ['test*']}],
       code: 'testResource.only("A test resource block", function() {});',
-      output: 'testResource.only("A test resource block", function() {});',
       errors: [{message: 'testResource.only not permitted'}],
     },
     {
@@ -203,7 +191,13 @@ ruleTester.run('no-only-tests', rules['no-only-tests'], {
       code: 'xit("No skipped tests", function() {});',
       errors: [{message: 'xit not permitted'}],
     },
+    {
+      options: [{functions: ['fit', 'xit'], fix: true}],
+      code: 'xit("No skipped tests", function() {});',
+      errors: [{message: 'xit not permitted'}],
+    },
   ],
 });
 
-console.log('Tests completed successfully');
+/* global process */
+process.stderr.write('\n✅ Tests completed successfully\n');
