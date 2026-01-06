@@ -24,6 +24,27 @@ yarn add --dev eslint-plugin-no-only-tests
 
 ## Usage
 
+### Flat Config (ESLint >= 9)
+
+If you're using ESLint's [flat config format](https://eslint.org/docs/latest/use/configure/configuration-files), add the plugin to your `eslint.config.js`:
+
+```javascript
+import noOnlyTests from 'eslint-plugin-no-only-tests';
+
+export default [
+  {
+    plugins: {
+      'no-only-tests': noOnlyTests
+    },
+    rules: {
+      'no-only-tests/no-only-tests': 'error'
+    }
+  }
+];
+```
+
+### Traditional Config (.eslintrc)
+
 Add `no-only-tests` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
 
 ```json
