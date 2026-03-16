@@ -61,6 +61,24 @@ Then add the rule to the rules section of your `.eslintrc`:
 }
 ```
 
+### Oxlint
+
+Add `eslint-plugin-no-only-tests` to the jsPlugins section of your `.oxlintrc.json`.
+
+```json
+"jsPlugins": ["eslint-plugin-no-only-tests"],
+```
+
+Then add the rule to the rules section of your `.oxlintrc.json`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+## Overrides
+
 If you use a testing framework that uses a test block name that isn't present in the [defaults](#options), or a different way of focusing test (something other than `.only`) you can specify an array of blocks and focus methods to match in the options.
 
 ```json
