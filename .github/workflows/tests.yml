@@ -24,10 +24,10 @@ jobs:
         run: bun ci
       - name: TypeScript
         run: bun run typecheck
-      - name: ESLint
+      - name: Oxlint
         run: bun run lint
-      - name: Biome
-        run: bun run check:biome
+      - name: Oxfmt
+        run: bun run format:check
       - name: Tests
         run: bun run test
         env:

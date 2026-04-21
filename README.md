@@ -29,17 +29,17 @@ This repository uses Bun as its package manager.
 If you're using ESLint's [flat config format](https://eslint.org/docs/latest/use/configure/configuration-files), add the plugin to your `eslint.config.js`:
 
 ```javascript
-import noOnlyTests from 'eslint-plugin-no-only-tests';
+import noOnlyTests from "eslint-plugin-no-only-tests";
 
 export default [
   {
     plugins: {
-      'no-only-tests': noOnlyTests
+      "no-only-tests": noOnlyTests,
     },
     rules: {
-      'no-only-tests/no-only-tests': 'error'
-    }
-  }
+      "no-only-tests/no-only-tests": "error",
+    },
+  },
 ];
 ```
 
