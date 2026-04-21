@@ -119,19 +119,8 @@ The default configuration works for [`describe.only`](https://vitest.dev/guide/f
 }
 ```
 
-Vitest note: Vitest already fails the run in CI when it encounters `.only`. The official [`allowOnly`](https://vitest.dev/config/allowonly) setting defaults to `!process.env.CI`, so focused tests fail by default in CI unless you opt back in.
-
-```ts
-import { defineConfig } from 'vitest/config'
-
-export default defineConfig({
-  test: {
-    allowOnly: false,
-  },
-})
-```
-
-This plugin still helps by catching the problem earlier in editors, pre-commit hooks and ESLint-based CI.
+> [!NOTE]
+> Vitest already fails the run in CI when it encounters `.only`. The official [`allowOnly`](https://vitest.dev/config/allowonly) setting defaults to `!process.env.CI`, so focused tests fail by default in CI unless you opt back in.
 
 ### Bun
 
@@ -143,13 +132,8 @@ If you use [`bun:test`](https://bun.sh/docs/test/writing-tests#testonly), the de
 }
 ```
 
-Bun note: Bun documents `bun test --only` as the switch that enables focused execution. Plain `bun test` still runs the full test suite, even when `.only` appears in the codebase.
-
-```bash
-bun test --only
-```
-
-This plugin is useful with Bun when you want lint-time or CI enforcement against committing focused tests.
+> [!NOTE]
+> Bun documents `bun test --only` as the switch that enables focused execution. Plain `bun test` still runs the full test suite, even when `.only` appears in the codebase.
 
 ### Mocha
 
@@ -161,13 +145,8 @@ This plugin is useful with Bun when you want lint-time or CI enforcement against
 }
 ```
 
-Mocha note: Mocha has a native CI/runtime guard via [`--forbid-only`](https://mochajs.org/running/cli/#--forbid-only), which fails the run if exclusive tests are present.
-
-```bash
-mocha --forbid-only
-```
-
-This plugin complements that by surfacing the problem during linting and optionally auto-fixing `.only`.
+> [!NOTE]
+> Mocha has a native CI/runtime guard via [`--forbid-only`](https://mochajs.org/running/cli/#--forbid-only), which fails the run if exclusive tests are present.
 
 ### Cypress
 
@@ -179,8 +158,6 @@ This plugin complements that by surfacing the problem during linting and optiona
 }
 ```
 
-Cypress note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
-
 ### Playwright Test
 
 The default configuration works for [`test.only`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only), `test.describe.only`, and similar chained APIs:
@@ -191,17 +168,8 @@ The default configuration works for [`test.only`](https://playwright.dev/docs/ap
 }
 ```
 
-Playwright note: Playwright has a native CI/runtime guard via [`forbidOnly`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only).
-
-```ts
-import { defineConfig } from '@playwright/test';
-
-export default defineConfig({
-  forbidOnly: !!process.env.CI,
-});
-```
-
-This plugin adds editor feedback and can remove `.only` automatically when `fix: true` is enabled.
+> [!NOTE]
+> Playwright has a native CI/runtime guard via [`forbidOnly`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only).
 
 ### Jasmine
 
@@ -212,8 +180,6 @@ Jasmine uses focused functions such as [`fit` and `fdescribe`](https://jasmine.g
   "no-only-tests/no-only-tests": ["error", { "functions": ["fit", "fdescribe"] }]
 }
 ```
-
-Jasmine note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
 
 ### AVA
 
@@ -240,8 +206,6 @@ check.only('focused test', (t) => {
   t.pass();
 });
 ```
-
-AVA note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
 
 ### node:test
 
