@@ -99,6 +99,8 @@ The default configuration works for [`describe.only`](https://jestjs.io/docs/api
 }
 ```
 
+Jest note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
 If your codebase also uses Jest's `fit` or `fdescribe` aliases, add them with `functions`:
 
 ```json
@@ -117,11 +119,23 @@ The default configuration works for [`describe.only`](https://vitest.dev/guide/f
 }
 ```
 
-Vitest already errors on `.only` in CI, so the main benefit of this plugin is earlier feedback in editors, pre-commit hooks and ESLint-based CI.
+Vitest note: Vitest already fails the run in CI when it encounters `.only`. The official [`allowOnly`](https://vitest.dev/config/allowonly) setting defaults to `!process.env.CI`, so focused tests fail by default in CI unless you opt back in.
 
-### Mocha and Cypress
+```ts
+import { defineConfig } from 'vitest/config'
 
-Both [Mocha](https://mochajs.org/running/cli/#--forbid-only) and [Cypress](https://docs.cypress.io/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests) use Mocha-style `describe.only` and `it.only`, so the default configuration works:
+export default defineConfig({
+  test: {
+    allowOnly: false,
+  },
+})
+```
+
+This plugin still helps by catching the problem earlier in editors, pre-commit hooks and ESLint-based CI.
+
+### Bun
+
+If you use [`bun:test`](https://bun.sh/docs/test/writing-tests#testonly), the default configuration works for `test.only` and `describe.only`:
 
 ```json
 "rules": {
@@ -129,7 +143,43 @@ Both [Mocha](https://mochajs.org/running/cli/#--forbid-only) and [Cypress](https
 }
 ```
 
-For Mocha specifically, the runtime `--forbid-only` flag is a good complement to linting.
+Bun note: Bun documents `bun test --only` as the switch that enables focused execution. Plain `bun test` still runs the full test suite, even when `.only` appears in the codebase.
+
+```bash
+bun test --only
+```
+
+This plugin is useful with Bun when you want lint-time or CI enforcement against committing focused tests.
+
+### Mocha
+
+[Mocha](https://mochajs.org/running/cli/#--forbid-only) uses `describe.only` and `it.only`, so the default configuration works:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Mocha note: Mocha has a native CI/runtime guard via [`--forbid-only`](https://mochajs.org/running/cli/#--forbid-only), which fails the run if exclusive tests are present.
+
+```bash
+mocha --forbid-only
+```
+
+This plugin complements that by surfacing the problem during linting and optionally auto-fixing `.only`.
+
+### Cypress
+
+[Cypress](https://docs.cypress.io/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests) uses Mocha-style `describe.only` and `it.only`, so the default configuration works:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Cypress note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
 
 ### Playwright Test
 
@@ -141,7 +191,17 @@ The default configuration works for [`test.only`](https://playwright.dev/docs/ap
 }
 ```
 
-Playwright's `forbidOnly` setting is the runtime equivalent. This plugin adds editor feedback and can remove `.only` automatically when `fix: true` is enabled.
+Playwright note: Playwright has a native CI/runtime guard via [`forbidOnly`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only).
+
+```ts
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  forbidOnly: !!process.env.CI,
+});
+```
+
+This plugin adds editor feedback and can remove `.only` automatically when `fix: true` is enabled.
 
 ### Jasmine
 
@@ -152,6 +212,8 @@ Jasmine uses focused functions such as [`fit` and `fdescribe`](https://jasmine.g
   "no-only-tests/no-only-tests": ["error", { "functions": ["fit", "fdescribe"] }]
 }
 ```
+
+Jasmine note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
 
 ### AVA
 
@@ -179,6 +241,8 @@ check.only('focused test', (t) => {
 });
 ```
 
+AVA note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
 ### node:test
 
 [`node:test`](https://nodejs.org/api/test.html#only-tests) supports both `.only` helpers such as `describe.only(...)` and an options-based `{ only: true }` API.
@@ -191,7 +255,11 @@ This rule can catch the `.only` call style with the default configuration:
 }
 ```
 
-It does not flag object options such as `{ only: true }`, so if you rely on `node:test`'s native focus mode you should use the runner's own `--test-only` behavior in addition to this plugin.
+`node:test` note: [`--test-only`](https://nodejs.org/api/test.html#only-tests) enables focused execution. It is not a fail-the-build guard like Mocha's `--forbid-only` or Playwright's `forbidOnly`.
+
+Without `--test-only`, Node currently prints an informational message that `only` requires the `--test-only` flag and still exits successfully after running the tests.
+
+This rule also does not flag object options such as `{ only: true }`, so that `node:test` API shape is not fully covered by either the default runtime behavior or this plugin.
 
 ## Overrides
 
