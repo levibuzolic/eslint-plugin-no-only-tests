@@ -21,7 +21,7 @@
   "author": "Levi Buzolic",
   "repository": {
     "type": "git",
-    "url": "git@github.com:levibuzolic/eslint-plugin-no-only-tests.git"
+    "url": "git+https://github.com/levibuzolic/eslint-plugin-no-only-tests.git"
   },
   "files": [
     "index.js",
