@@ -77,6 +77,190 @@ Then add the rule to the rules section of your `.oxlintrc.json`:
 }
 ```
 
+## Native test runner support
+
+Some test runners can already fail focused tests at runtime:
+
+- [Mocha](https://mochajs.org/running/cli/#--forbid-only): `--forbid-only`
+- [Playwright Test](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only): `forbidOnly: !!process.env.CI`
+- [Vitest](https://vitest.dev/api/test#test-only): fails on `.only` in CI by default unless `allowOnly` is enabled
+
+This plugin is still useful with those runners if you want editor feedback, ESLint-based CI, or opt-in autofixing.
+
+## Common framework setups
+
+### Jest
+
+The default configuration works for [`describe.only`](https://jestjs.io/docs/api#describeonlyname-fn), `it.only` and `test.only`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Jest note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
+If your codebase also uses Jest's `fit` or `fdescribe` aliases, add them with `functions`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": ["error", { "functions": ["fit", "fdescribe"] }]
+}
+```
+
+### Vitest
+
+The default configuration works for [`describe.only`](https://vitest.dev/guide/filtering#selecting-suites-and-tests-to-run), `it.only`, `test.only`, and chained calls such as `test.concurrent.only`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Vitest note: Vitest already fails the run in CI when it encounters `.only`. The official [`allowOnly`](https://vitest.dev/config/allowonly) setting defaults to `!process.env.CI`, so focused tests fail by default in CI unless you opt back in.
+
+```ts
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    allowOnly: false,
+  },
+})
+```
+
+This plugin still helps by catching the problem earlier in editors, pre-commit hooks and ESLint-based CI.
+
+### Bun
+
+If you use [`bun:test`](https://bun.sh/docs/test/writing-tests#testonly), the default configuration works for `test.only` and `describe.only`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Bun note: Bun documents `bun test --only` as the switch that enables focused execution. Plain `bun test` still runs the full test suite, even when `.only` appears in the codebase.
+
+```bash
+bun test --only
+```
+
+This plugin is useful with Bun when you want lint-time or CI enforcement against committing focused tests.
+
+### Mocha
+
+[Mocha](https://mochajs.org/running/cli/#--forbid-only) uses `describe.only` and `it.only`, so the default configuration works:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Mocha note: Mocha has a native CI/runtime guard via [`--forbid-only`](https://mochajs.org/running/cli/#--forbid-only), which fails the run if exclusive tests are present.
+
+```bash
+mocha --forbid-only
+```
+
+This plugin complements that by surfacing the problem during linting and optionally auto-fixing `.only`.
+
+### Cypress
+
+[Cypress](https://docs.cypress.io/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests) uses Mocha-style `describe.only` and `it.only`, so the default configuration works:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Cypress note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
+### Playwright Test
+
+The default configuration works for [`test.only`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only), `test.describe.only`, and similar chained APIs:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+Playwright note: Playwright has a native CI/runtime guard via [`forbidOnly`](https://playwright.dev/docs/api/class-testconfig#test-config-forbid-only).
+
+```ts
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  forbidOnly: !!process.env.CI,
+});
+```
+
+This plugin adds editor feedback and can remove `.only` automatically when `fix: true` is enabled.
+
+### Jasmine
+
+Jasmine uses focused functions such as [`fit` and `fdescribe`](https://jasmine.github.io/archives/2.8/focused_specs.html), so add them with `functions`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": ["error", { "functions": ["fit", "fdescribe"] }]
+}
+```
+
+Jasmine note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
+### AVA
+
+The default configuration works for AVA when your imported test function is named `test`, including `test.only` and `test.serial.only`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+If you alias the import, add the local name to `block`:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": ["error", { "block": ["check"] }]
+}
+```
+
+```javascript
+import check from 'ava';
+
+check.only('focused test', (t) => {
+  t.pass();
+});
+```
+
+AVA note: use this plugin when you want `.only` enforcement during linting, in editors, or in ESLint-based CI.
+
+### node:test
+
+[`node:test`](https://nodejs.org/api/test.html#only-tests) supports both `.only` helpers such as `describe.only(...)` and an options-based `{ only: true }` API.
+
+This rule can catch the `.only` call style with the default configuration:
+
+```json
+"rules": {
+  "no-only-tests/no-only-tests": "error"
+}
+```
+
+`node:test` note: [`--test-only`](https://nodejs.org/api/test.html#only-tests) enables focused execution. It is not a fail-the-build guard like Mocha's `--forbid-only` or Playwright's `forbidOnly`.
+
+Without `--test-only`, Node currently prints an informational message that `only` requires the `--test-only` flag and still exits successfully after running the tests.
+
+This rule also does not flag object options such as `{ only: true }`, so that `node:test` API shape is not fully covered by either the default runtime behavior or this plugin.
+
 ## Overrides
 
 If you use a testing framework that uses a test block name that isn't present in the [defaults](#options), or a different way of focusing test (something other than `.only`) you can specify an array of blocks and focus methods to match in the options.
