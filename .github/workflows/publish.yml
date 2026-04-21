@@ -9,42 +9,54 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - run: yarn install
-      - run: yarn test
+          node-version: 24
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+      - run: bun ci
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run format:check
+      - run: bun run test
 
   publish-npm:
     name: Publish NPM
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           registry-url: https://registry.npmjs.org/
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
       - name: Install dependencies
-        run: yarn install
+        run: bun ci
       - name: Publish package to NPM
-        run: yarn publish
+        run: bun publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NPM_CONFIG_TOKEN: ${{ secrets.npm_token }}
 
 #   publish-gpr:
 #     name: Publish GPR
 #     needs: test
 #     runs-on: ubuntu-latest
 #     steps:
-#       - uses: actions/checkout@v2
-#       - uses: actions/setup-node@v2
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
 #         with:
-#           node-version: 18
+#           node-version: 24
 #           registry-url: https://npm.pkg.github.com/
 #           scope: '@levibuzolic'
-#         - run: yarn install
-#         - run: yarn publish
+#       - uses: oven-sh/setup-bun@v2
+#         with:
+#           bun-version: 1.3.13
+#       - run: bun ci
+#       - run: bun publish
 #         env:
-#           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#           NPM_CONFIG_TOKEN: ${{secrets.GITHUB_TOKEN}}

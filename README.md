@@ -1,6 +1,6 @@
 # eslint-plugin-no-only-tests
 
-[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
+[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions/workflows/tests.yml)
 
 ESLint rule for `.only` tests in [Mocha](https://mochajs.org/), [Jest](https://jestjs.io/), [Jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
 
@@ -15,12 +15,14 @@ If the testing framework you use doesn't use `.only` to focus tests, you can ove
 [Install ESLint](https://eslint.org/docs/user-guide/getting-started) if you haven't done so already, then install `eslint-plugin-no-only-tests`:
 
 ```bash
-npm install --save-dev eslint-plugin-no-only-tests
-# or
-yarn add --dev eslint-plugin-no-only-tests
+bun add --dev eslint eslint-plugin-no-only-tests
 ```
 
-> **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
+This package supports Node.js 5 or newer.
+
+This repository uses Bun as its package manager.
+
+If you're using Oxlint only, you do not need to install ESLint.
 
 ## Usage
 
@@ -29,17 +31,17 @@ yarn add --dev eslint-plugin-no-only-tests
 If you're using ESLint's [flat config format](https://eslint.org/docs/latest/use/configure/configuration-files), add the plugin to your `eslint.config.js`:
 
 ```javascript
-import noOnlyTests from 'eslint-plugin-no-only-tests';
+import noOnlyTests from "eslint-plugin-no-only-tests";
 
 export default [
   {
     plugins: {
-      'no-only-tests': noOnlyTests
+      "no-only-tests": noOnlyTests,
     },
     rules: {
-      'no-only-tests/no-only-tests': 'error'
-    }
-  }
+      "no-only-tests/no-only-tests": "error",
+    },
+  },
 ];
 ```
 
@@ -76,6 +78,9 @@ Then add the rule to the rules section of your `.oxlintrc.json`:
   "no-only-tests/no-only-tests": "error"
 }
 ```
+
+> [!TIP]
+> This package already works with Oxlint via `jsPlugins`. In `v3.4.0`, the rule was updated to use Oxlint's performance-focused `createOnce` API internally while keeping the same external configuration and ESLint compatibility.
 
 ## Native test runner support
 
@@ -200,9 +205,9 @@ If you alias the import, add the local name to `block`:
 ```
 
 ```javascript
-import check from 'ava';
+import check from "ava";
 
-check.only('focused test', (t) => {
+check.only("focused test", (t) => {
   t.pass();
 });
 ```
