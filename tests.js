@@ -1,8 +1,11 @@
 const rules = require("./index").rules;
 const RuleTester = require("eslint").RuleTester;
 const ruleTester = new RuleTester();
+const rule = /** @type {import("eslint").Rule.RuleModule} */ (
+	rules["no-only-tests"]
+);
 
-ruleTester.run("no-only-tests", rules["no-only-tests"], {
+ruleTester.run("no-only-tests", rule, {
 	valid: [
 		'describe("Some describe block", function() {});',
 		'it("Some assertion", function() {});',

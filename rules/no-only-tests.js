@@ -1,3 +1,5 @@
+const { defineRule } = require("@oxlint/plugins");
+
 /**
  * @fileoverview Rule to flag use of .only in tests, preventing focused tests being committed accidentally
  * @author Levi Buzolic
@@ -5,7 +7,7 @@
 
 /** @typedef {{block?: string[], focus?: string[], functions?: string[], fix?: boolean}} Options */
 
-/** @type {Options} */
+/** @type {{block: string[], focus: string[], functions: string[], fix: boolean}} */
 const defaultOptions = {
 	block: [
 		"describe",
@@ -27,8 +29,7 @@ const defaultOptions = {
 	fix: false,
 };
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+module.exports = defineRule({
 	meta: {
 		docs: {
 			description: "disallow .only blocks in tests",
@@ -74,14 +75,14 @@ module.exports = {
 			},
 		],
 	},
-	createOnce(context) {
+	createOnce(/** @type {import("@oxlint/plugins").Context} */ context) {
 		return createOnceVisitors(context);
 	},
-};
+});
 
 /**
- * @param {import('eslint').Rule.RuleContext} context
- * @returns {Record<string, Function>}
+ * @param {import("@oxlint/plugins").Context} context
+ * @returns {import("@oxlint/plugins").VisitorWithHooks}
  */
 function createOnceVisitors(context) {
 	/** @type {string[]} */
@@ -96,15 +97,15 @@ function createOnceVisitors(context) {
 		before() {
 			/** @type {Options} */
 			const options = Object.assign({}, defaultOptions, context.options[0]);
-			blocks = options.block || [];
-			focus = options.focus || [];
-			functions = options.functions || [];
+			blocks = options.block ?? defaultOptions.block;
+			focus = options.focus ?? defaultOptions.focus;
+			functions = options.functions ?? defaultOptions.functions;
 			fix = !!options.fix;
 		},
-		Identifier(node) {
+		Identifier(/** @type {any} */ node) {
 			if (functions.length && functions.indexOf(node.name) > -1) {
 				context.report({
-					node,
+					node: /** @type {import("@oxlint/plugins").Ranged} */ (node),
 					message: `${node.name} not permitted`,
 				});
 			}
@@ -129,7 +130,7 @@ function createOnceVisitors(context) {
 				const rangeEnd = node.range?.[1];
 
 				context.report({
-					node,
+					node: /** @type {import("@oxlint/plugins").Ranged} */ (node),
 					message: `${callPath} not permitted`,
 					fix:
 						fix && rangeStart != null && rangeEnd != null

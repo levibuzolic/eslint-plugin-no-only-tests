@@ -15,14 +15,12 @@ If the testing framework you use doesn't use `.only` to focus tests, you can ove
 [Install ESLint](https://eslint.org/docs/user-guide/getting-started) if you haven't done so already, then install `eslint-plugin-no-only-tests`:
 
 ```bash
-npm install --save-dev eslint-plugin-no-only-tests
-# or
-yarn add --dev eslint-plugin-no-only-tests
+bun add --dev eslint-plugin-no-only-tests
 ```
 
 This package requires Node.js 16 or newer.
 
-> **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
+This repository uses Bun as its package manager.
 
 ## Usage
 
