@@ -20,6 +20,8 @@ npm install --save-dev eslint-plugin-no-only-tests
 yarn add --dev eslint-plugin-no-only-tests
 ```
 
+This package requires Node.js 16 or newer.
+
 > **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-no-only-tests` globally.
 
 ## Usage

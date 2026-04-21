@@ -1,3 +1,13 @@
+# v4.0.0
+
+## Added
+
+ * Optimize Oxlint usage with the official `@oxlint/plugins` compatibility adapter
+
+## Breaking
+
+ * Updated node engine to `>=16.0.0`
+
 # v3.0.0
 
 ## Added

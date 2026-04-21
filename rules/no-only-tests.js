@@ -74,55 +74,72 @@ module.exports = {
 			},
 		],
 	},
-	create(context) {
-		/** @type {Options} */
-		const options = Object.assign({}, defaultOptions, context.options[0]);
-		const blocks = options.block || [];
-		const focus = options.focus || [];
-		const functions = options.functions || [];
-		const fix = !!options.fix;
-
-		return {
-			Identifier(node) {
-				if (functions.length && functions.indexOf(node.name) > -1) {
-					context.report({
-						node,
-						message: `${node.name} not permitted`,
-					});
-				}
-
-				const parentObject =
-					"object" in node.parent ? node.parent.object : undefined;
-				if (parentObject == null) return;
-				if (focus.indexOf(node.name) === -1) return;
-
-				const callPath = getCallPath(node.parent).join(".");
-
-				// comparison guarantees that matching is done with the beginning of call path
-				if (
-					blocks.find((block) => {
-						// Allow wildcard tail matching of blocks when ending in a `*`
-						if (block.endsWith("*"))
-							return callPath.startsWith(block.replace(/\*$/, ""));
-						return callPath.startsWith(`${block}.`);
-					})
-				) {
-					const rangeStart = node.range?.[0];
-					const rangeEnd = node.range?.[1];
-
-					context.report({
-						node,
-						message: `${callPath} not permitted`,
-						fix:
-							fix && rangeStart != null && rangeEnd != null
-								? (fixer) => fixer.removeRange([rangeStart - 1, rangeEnd])
-								: undefined,
-					});
-				}
-			},
-		};
+	createOnce(context) {
+		return createOnceVisitors(context);
 	},
 };
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @returns {Record<string, Function>}
+ */
+function createOnceVisitors(context) {
+	/** @type {string[]} */
+	let blocks = defaultOptions.block;
+	/** @type {string[]} */
+	let focus = defaultOptions.focus;
+	/** @type {string[]} */
+	let functions = defaultOptions.functions;
+	let fix = defaultOptions.fix;
+
+	return {
+		before() {
+			/** @type {Options} */
+			const options = Object.assign({}, defaultOptions, context.options[0]);
+			blocks = options.block || [];
+			focus = options.focus || [];
+			functions = options.functions || [];
+			fix = !!options.fix;
+		},
+		Identifier(node) {
+			if (functions.length && functions.indexOf(node.name) > -1) {
+				context.report({
+					node,
+					message: `${node.name} not permitted`,
+				});
+			}
+
+			const parentObject =
+				"object" in node.parent ? node.parent.object : undefined;
+			if (parentObject == null) return;
+			if (focus.indexOf(node.name) === -1) return;
+
+			const callPath = getCallPath(node.parent).join(".");
+
+			// comparison guarantees that matching is done with the beginning of call path
+			if (
+				blocks.find((block) => {
+					// Allow wildcard tail matching of blocks when ending in a `*`
+					if (block.endsWith("*"))
+						return callPath.startsWith(block.replace(/\*$/, ""));
+					return callPath.startsWith(`${block}.`);
+				})
+			) {
+				const rangeStart = node.range?.[0];
+				const rangeEnd = node.range?.[1];
+
+				context.report({
+					node,
+					message: `${callPath} not permitted`,
+					fix:
+						fix && rangeStart != null && rangeEnd != null
+							? (fixer) => fixer.removeRange([rangeStart - 1, rangeEnd])
+							: undefined,
+				});
+			}
+		},
+	};
+}
 
 /**
  *

@@ -133,6 +133,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@oxlint/plugins@^1.61.0":
+  version "1.61.0"
+  resolved "https://registry.yarnpkg.com/@oxlint/plugins/-/plugins-1.61.0.tgz#a298758a9b4fe4fe6940decca7dbfd5bcda9800e"
+  integrity sha512-nkOyZEF1vH527CkdQtOp1HMrVFEM4ResURvI2JFeGoup+h+43J/k/FgdOR9b9Isxg+Yae7qVDa7y3nssE8b3TQ==
+
 "@types/eslint@*", "@types/eslint@^9.6.0":
   version "9.6.0"
   resolved "https://registry.npmjs.org/@types/eslint/-/eslint-9.6.0.tgz#51d4fe4d0316da9e9f2c80884f2c20ed5fb022ff"
