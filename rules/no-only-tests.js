@@ -1,11 +1,15 @@
-const { defineRule } = require("@oxlint/plugins");
-
 /**
  * @fileoverview Rule to flag use of .only in tests, preventing focused tests being committed accidentally
  * @author Levi Buzolic
  */
 
-/** @typedef {{block?: string[], focus?: string[], functions?: string[], fix?: boolean}} Options */
+/** @typedef {import("eslint").AST.Range} Range */
+/** @typedef {import("estree").Node} EstreeNode */
+/** @typedef {import("estree").Identifier} Identifier */
+/** @typedef {EstreeNode & { parent?: ParentNode | null, range?: Range }} ParentNode */
+/** @typedef {Identifier & { parent: ParentNode, range?: Range }} IdentifierNode */
+/** @typedef {{options: unknown[], report: import("eslint").Rule.RuleContext["report"]}} RuleContext */
+/** @typedef {{before?: () => boolean | void, Identifier: (node: IdentifierNode) => void}} VisitorWithHooks */
 
 /** @type {{block: string[], focus: string[], functions: string[], fix: boolean}} */
 const defaultOptions = {
@@ -29,10 +33,11 @@ const defaultOptions = {
   fix: false,
 };
 
-module.exports = defineRule({
+/** @type {import("eslint").Rule.RuleModule & { createOnce: (context: RuleContext) => VisitorWithHooks }} */
+module.exports = {
   meta: {
     docs: {
-      description: "disallow .only blocks in tests",
+      description: "disallow focused/only tests",
       category: "Possible Errors",
       recommended: true,
       url: "https://github.com/levibuzolic/eslint-plugin-no-only-tests",
@@ -75,42 +80,54 @@ module.exports = defineRule({
       },
     ],
   },
-  createOnce(/** @type {import("@oxlint/plugins").Context} */ context) {
+  create(context) {
+    const visitor = createOnceVisitors({
+      options: context.options,
+      report: context.report.bind(context),
+    });
+
+    if (typeof visitor.before === "function" && visitor.before() === false) return {};
+
+    /** @type {import("eslint").Rule.RuleListener} */
+    const eslintVisitor = {};
+    for (const [eventName, handler] of Object.entries(visitor)) {
+      if (eventName === "before") continue;
+      eslintVisitor[eventName] = handler;
+    }
+    return eslintVisitor;
+  },
+  createOnce(context) {
     return createOnceVisitors(context);
   },
-});
+};
 
 /**
- * @param {import("@oxlint/plugins").Context} context
- * @returns {import("@oxlint/plugins").VisitorWithHooks}
+ * @param {RuleContext} context
+ * @returns {VisitorWithHooks}
  */
 function createOnceVisitors(context) {
-  /** @type {string[]} */
   let blocks = defaultOptions.block;
-  /** @type {string[]} */
   let focus = defaultOptions.focus;
-  /** @type {string[]} */
   let functions = defaultOptions.functions;
   let fix = defaultOptions.fix;
 
   return {
     before() {
-      /** @type {Options} */
       const options = Object.assign({}, defaultOptions, context.options[0]);
       blocks = options.block ?? defaultOptions.block;
       focus = options.focus ?? defaultOptions.focus;
       functions = options.functions ?? defaultOptions.functions;
       fix = !!options.fix;
     },
-    Identifier(/** @type {any} */ node) {
+    Identifier(node) {
       if (functions.length && functions.indexOf(node.name) > -1) {
         context.report({
-          node: /** @type {import("@oxlint/plugins").Ranged} */ (node),
+          node,
           message: `${node.name} not permitted`,
         });
       }
 
-      const parentObject = "object" in node.parent ? node.parent.object : undefined;
+      const parentObject = isMemberExpression(node.parent) ? node.parent.object : undefined;
       if (parentObject == null) return;
       if (focus.indexOf(node.name) === -1) return;
 
@@ -128,7 +145,7 @@ function createOnceVisitors(context) {
         const rangeEnd = node.range?.[1];
 
         context.report({
-          node: /** @type {import("@oxlint/plugins").Ranged} */ (node),
+          node,
           message: `${callPath} not permitted`,
           fix:
             fix && rangeStart != null && rangeEnd != null
@@ -142,23 +159,49 @@ function createOnceVisitors(context) {
 
 /**
  *
- * @param {import('estree').Node} node
+ * @param {ParentNode} node
  * @param {string[]} path
- * @returns
+ * @returns {string[]}
  */
 function getCallPath(node, path = []) {
-  if (node) {
-    const nodeName =
-      "name" in node && node.name
-        ? node.name
-        : "property" in node && node.property && "name" in node.property
-          ? node.property?.name
-          : undefined;
-    if ("object" in node && node.object && nodeName)
-      return getCallPath(node.object, [nodeName, ...path]);
-    if ("callee" in node && node.callee) return getCallPath(node.callee, path);
-    if (nodeName) return [nodeName, ...path];
-    return path;
+  const nodeName = getNodeName(node);
+
+  if (isMemberExpression(node) && nodeName) {
+    return getCallPath(node.object, [nodeName, ...path]);
   }
+
+  if (isCallExpression(node)) {
+    return getCallPath(node.callee, path);
+  }
+
+  if (nodeName) return [nodeName, ...path];
   return path;
+}
+
+/**
+ * @param {EstreeNode} node
+ * @returns {node is import("estree").MemberExpression}
+ */
+function isMemberExpression(node) {
+  return node.type === "MemberExpression";
+}
+
+/**
+ * @param {EstreeNode} node
+ * @returns {node is import("estree").CallExpression}
+ */
+function isCallExpression(node) {
+  return node.type === "CallExpression";
+}
+
+/**
+ * @param {EstreeNode} node
+ * @returns {string | undefined}
+ */
+function getNodeName(node) {
+  if (node.type === "Identifier") return node.name;
+  if (node.type === "MemberExpression" && !node.computed && node.property.type === "Identifier") {
+    return node.property.name;
+  }
+  return undefined;
 }

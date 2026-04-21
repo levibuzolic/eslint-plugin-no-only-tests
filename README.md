@@ -1,6 +1,6 @@
 # eslint-plugin-no-only-tests
 
-[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/workflows/Tests/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions?query=workflow%3ATests)
+[![Version](https://img.shields.io/npm/v/eslint-plugin-no-only-tests.svg)](https://www.npmjs.com/package/eslint-plugin-no-only-tests) [![Downloads](https://img.shields.io/npm/dm/eslint-plugin-no-only-tests.svg)](https://npmcharts.com/compare/eslint-plugin-no-only-tests?minimal=true) [![GitHub Tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions/workflows/tests.yml)
 
 ESLint rule for `.only` tests in [Mocha](https://mochajs.org/), [Jest](https://jestjs.io/), [Jasmine](https://jasmine.github.io/), [Mocha Cakes 2](https://github.com/iensu/mocha-cakes-2) and other JS testing libraries.
 
@@ -15,12 +15,14 @@ If the testing framework you use doesn't use `.only` to focus tests, you can ove
 [Install ESLint](https://eslint.org/docs/user-guide/getting-started) if you haven't done so already, then install `eslint-plugin-no-only-tests`:
 
 ```bash
-bun add --dev eslint-plugin-no-only-tests
+bun add --dev eslint eslint-plugin-no-only-tests
 ```
 
 This package requires Node.js 16 or newer.
 
 This repository uses Bun as its package manager.
+
+If you're using Oxlint only, you do not need to install ESLint.
 
 ## Usage
 

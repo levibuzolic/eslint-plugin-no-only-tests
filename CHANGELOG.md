@@ -3,10 +3,16 @@
 ## Added
 
 - Optimize Oxlint usage with the official `@oxlint/plugins` compatibility adapter
+- Add CLI E2E coverage for both ESLint and Oxlint, including `--fix` verification
 
 ## Breaking
 
 - Updated node engine to `>=16.0.0`
+
+## Changed
+
+- Switch repository tooling to Bun, Oxlint, and Oxfmt
+- Tighten package metadata for modern consumers and Oxlint compatibility
 
 # v3.0.0
 

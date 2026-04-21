@@ -1,7 +1,10 @@
-const rules = require("./index").rules;
-const RuleTester = require("eslint").RuleTester;
+import { RuleTester } from "eslint";
+import plugin from "../index.js";
+
 const ruleTester = new RuleTester();
-const rule = /** @type {import("eslint").Rule.RuleModule} */ (rules["no-only-tests"]);
+const rule = /** @type {import("eslint").Rule.RuleModule} */ (
+  /** @type {Record<string, import("eslint").Rule.RuleModule>} */ (plugin.rules)["no-only-tests"]
+);
 
 ruleTester.run("no-only-tests", rule, {
   valid: [
@@ -79,7 +82,6 @@ ruleTester.run("no-only-tests", rule, {
       code: 'test.focus("An alternative focus function", function() {});',
       errors: [{ message: "test.focus not permitted" }],
     },
-    // As above, but with fix: true option to enable auto-fixing
     {
       options: [{ fix: true }],
       code: 'describe.only("Some describe block", function() {});',
@@ -200,5 +202,4 @@ ruleTester.run("no-only-tests", rule, {
   ],
 });
 
-/* global process */
 process.stderr.write("\n✅ Tests completed successfully\n");

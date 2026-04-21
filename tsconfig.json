@@ -6,6 +6,7 @@
     "target": "es2022",
     "allowJs": true,
     "checkJs": true,
+    "types": ["node"],
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
@@ -16,5 +17,6 @@
     "module": "preserve",
     "noEmit": true,
     "lib": ["es2022"]
-  }
+  },
+  "exclude": ["test/fixtures/**/*.js"]
 }

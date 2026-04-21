@@ -1,16 +1,10 @@
-const { definePlugin, eslintCompatPlugin } = require("@oxlint/plugins");
+const rule = /** @type {import("eslint").Rule.RuleModule} */ (require("./rules/no-only-tests"));
 
-/** @type {import("@oxlint/plugins").Plugin} */
-const plugin = definePlugin({
+module.exports = /** @type {import("eslint").ESLint.Plugin & { meta: { name: string } }} */ ({
   meta: {
     name: "no-only-tests",
   },
   rules: {
-    "no-only-tests": require("./rules/no-only-tests"),
+    "no-only-tests": rule,
   },
 });
-
-module.exports =
-  /** @type {import("@oxlint/plugins").Plugin & import("eslint").ESLint.Plugin} */ (
-    eslintCompatPlugin(plugin)
-  );
