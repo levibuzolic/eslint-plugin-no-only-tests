@@ -2,8 +2,9 @@
 
 ## Added
 
-- Optimize Oxlint usage with the official `@oxlint/plugins` compatibility adapter
-- Add CLI E2E coverage for both ESLint and Oxlint, including `--fix` verification
+- Add Oxlint support while preserving ESLint compatibility, including Oxlint's `createOnce` entrypoint
+- Add CLI E2E coverage for both ESLint and Oxlint, including `--fix` verification and config-specific assertions
+- Add a package-contents check to ensure test assets are never published
 
 ## Breaking
 
@@ -11,8 +12,12 @@
 
 ## Changed
 
-- Switch repository tooling to Bun, Oxlint, and Oxfmt
-- Tighten package metadata for modern consumers and Oxlint compatibility
+- Switch repository tooling from Yarn to Bun
+- Replace Biome/Prettier usage with Oxlint and Oxfmt
+- Update GitHub Actions to use Bun and a modern Node test matrix
+- Move test infrastructure into a dedicated `test/` directory
+- Tighten package metadata and improve JSDoc/type coverage for the modernized codebase
+- Keep the final Oxlint compatibility implementation dependency-free at runtime
 
 # v3.0.0
 
