@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-no-only-tests",
-  "version": "4.0.0",
+  "version": "3.4.0",
   "description": "ESLint rule for .only blocks in mocha tests",
   "keywords": [
     "describe",
@@ -52,16 +52,8 @@
     "oxlint": "^1.61.0",
     "typescript": "^6.0.3"
   },
-  "peerDependencies": {
-    "eslint": ">=9.0.0"
-  },
-  "peerDependenciesMeta": {
-    "eslint": {
-      "optional": true
-    }
-  },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=5.0.0"
   },
   "packageManager": "bun@1.3.13"
 }

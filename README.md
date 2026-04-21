@@ -18,7 +18,7 @@ If the testing framework you use doesn't use `.only` to focus tests, you can ove
 bun add --dev eslint eslint-plugin-no-only-tests
 ```
 
-This package requires Node.js 16 or newer.
+This package supports Node.js 5 or newer.
 
 This repository uses Bun as its package manager.
 
@@ -78,6 +78,8 @@ Then add the rule to the rules section of your `.oxlintrc.json`:
   "no-only-tests/no-only-tests": "error"
 }
 ```
+
+This package already works with Oxlint via `jsPlugins`. In `v3.4.0`, the rule was updated to use Oxlint's performance-focused `createOnce` API internally while keeping the same external configuration and ESLint compatibility.
 
 ## Overrides
 
