@@ -7,3 +7,4 @@ Releasing is handled by GitHub Actions and is powered by GitHub Releases.
     - Set the release title to the new version
     - Auto-generate the release notes, excluding any internal changes
 4.  [Watch the release build](https://github.com/levibuzolic/eslint-plugin-no-only-tests/actions/workflows/publish.yml) and verify it completes successfully
+    - CI installs and validates with Bun, then publishes to npm using `npm publish`
