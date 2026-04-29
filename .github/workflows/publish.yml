@@ -28,6 +28,7 @@ jobs:
     name: Publish NPM
     needs: test
     runs-on: ubuntu-latest
+    environment: Publish
     permissions:
       contents: read
       id-token: write
@@ -36,6 +37,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          registry-url: https://registry.npmjs.org/
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.13
