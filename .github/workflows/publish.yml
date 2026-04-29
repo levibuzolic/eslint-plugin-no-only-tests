@@ -28,6 +28,7 @@ jobs:
     name: Publish NPM
     needs: test
     runs-on: ubuntu-latest
+    environment: Publish
     permissions:
       contents: read
       id-token: write
